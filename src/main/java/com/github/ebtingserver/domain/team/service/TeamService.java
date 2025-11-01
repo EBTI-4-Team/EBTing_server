@@ -2,6 +2,7 @@ package com.github.ebtingserver.domain.team.service;
 
 import com.github.ebtingserver.domain.participation.repository.ParticipationRepository;
 import com.github.ebtingserver.domain.team.dto.request.TeamCreateRequest;
+import com.github.ebtingserver.domain.team.dto.request.TeamInfoUpdate;
 import com.github.ebtingserver.domain.team.dto.response.TeamDetailResponse;
 import com.github.ebtingserver.domain.team.dto.response.TeamMemberResponse;
 import com.github.ebtingserver.domain.team.dto.response.TeamResponseDto;
@@ -57,6 +58,13 @@ public class TeamService {
                 .toList();
 
         return TeamDetailResponse.of(team, members);
+    }
+
+    @Transactional
+    public void updateTeamInfo(Long teamId, TeamInfoUpdate request){
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "팀을 찾을 수 없습니다"));
+        team.update(request.teamName(), request.maxMember(), request.teamExplain());
     }
 
 
