@@ -3,6 +3,7 @@ package com.github.ebtingserver.domain.team.controller;
 
 import com.github.ebtingserver.common.dto.ResponseDTO;
 import com.github.ebtingserver.domain.team.dto.request.TeamCreateRequest;
+import com.github.ebtingserver.domain.team.dto.request.TeamInfoUpdate;
 import com.github.ebtingserver.domain.team.dto.response.TeamDetailResponse;
 import com.github.ebtingserver.domain.team.dto.response.TeamResponseDto;
 import com.github.ebtingserver.domain.team.service.TeamService;
@@ -40,5 +41,18 @@ public class TeamController {
     public ResponseDTO<TeamDetailResponse> getTeamDetail(@PathVariable Long teamId) {
         return ResponseDTO.ok(teamService.getTeamDetail(teamId));
     }
+
+    @PatchMapping("/{teamId}")
+    public ResponseDTO<Void> updateTeamInfo(@PathVariable Long teamId, @RequestBody TeamInfoUpdate request) {
+        teamService.updateTeamInfo(teamId, request);
+        return ResponseDTO.ok();
+    }
+
+    @DeleteMapping("/{teamId}")
+    public ResponseDTO<Void> deleteTeam(@PathVariable Long teamId,@RequestParam Long userId) {
+        teamService.deleteTeam(teamId, userId);
+        return ResponseDTO.ok();
+    }
+
 
 }

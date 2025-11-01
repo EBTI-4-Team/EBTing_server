@@ -23,4 +23,10 @@ public class Team extends com.github.ebtingserver.common.entity.BaseTimeEntity {
 
     @Column(name="team_explain")
     private String teamExplain;
+
+    public void update(String teamName, Integer maxMember, String teamExplain) {
+        this.teamName = teamName;
+        this.maxMember = maxMember;
+        this.teamExplain = teamExplain;
+    }
 }

@@ -5,6 +5,7 @@ import com.github.ebtingserver.domain.participation.entity.Participation;
 import com.github.ebtingserver.domain.participation.entity.ParticipationRole;
 import com.github.ebtingserver.domain.participation.repository.ParticipationRepository;
 import com.github.ebtingserver.domain.team.dto.request.TeamCreateRequest;
+import com.github.ebtingserver.domain.team.dto.request.TeamInfoUpdate;
 import com.github.ebtingserver.domain.team.dto.response.TeamDetailResponse;
 import com.github.ebtingserver.domain.team.dto.response.TeamMemberResponse;
 import com.github.ebtingserver.domain.team.dto.response.TeamResponseDto;
@@ -28,6 +29,7 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
     private final ParticipationRepository participationRepository;
+    private final UserRepository userRepository;
 
     public List<TeamResponseDto> getAllTeams() {
         return teamRepository.findAll()
@@ -46,6 +48,7 @@ public class TeamService {
                 .maxMember(request.maxMember())
                 .teamExplain(request.teamExplain())
                 .build();
+
         teamRepository.save(team);
 
         Participation participation = Participation.builder()
@@ -70,6 +73,26 @@ public class TeamService {
                 .toList();
 
         return TeamDetailResponse.of(team, members);
+    }
+
+    @Transactional
+    public void updateTeamInfo(Long teamId, TeamInfoUpdate request){
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "팀을 찾을 수 없습니다"));
+        team.update(request.teamName(), request.maxMember(), request.teamExplain());
+    }
+
+    @Transactional
+    public void deleteTeam(Long teamId, Long userId){
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "팀을 찾을 수 없습니다"));
+        boolean isAdmin = participationRepository
+                .existsByTeam_TeamIdAndUser_UserIdAndRole(teamId, userId, ParticipationRole.ADMIN);
+        if (!isAdmin) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다 (ADMIN 전용)");
+        } else  {
+            teamRepository.deleteById(teamId);
+        }
     }
 
 
