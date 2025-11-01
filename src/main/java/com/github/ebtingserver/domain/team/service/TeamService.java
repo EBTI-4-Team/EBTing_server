@@ -1,12 +1,10 @@
-package com.github.ebtingserver.team.service;
+package com.github.ebtingserver.domain.team.service;
 
-import com.github.ebtingserver.team.dto.request.TeamCreateRequest;
-import com.github.ebtingserver.team.dto.response.TeamResponseDto;
-import com.github.ebtingserver.team.entity.Team;
-import com.github.ebtingserver.team.repository.TeamRepository;
-import lombok.Builder;
+import com.github.ebtingserver.domain.team.dto.request.TeamCreateRequest;
+import com.github.ebtingserver.domain.team.dto.response.TeamResponseDto;
+import com.github.ebtingserver.domain.team.entity.Team;
+import com.github.ebtingserver.domain.team.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
