@@ -48,4 +48,11 @@ public class TeamController {
         return ResponseDTO.ok();
     }
 
+    @DeleteMapping("/{teamId}")
+    public ResponseDTO<Void> deleteTeam(@PathVariable Long teamId,@RequestParam Long userId) {
+        teamService.deleteTeam(teamId, userId);
+        return ResponseDTO.ok();
+    }
+
+
 }
