@@ -64,7 +64,8 @@ public class TeamService {
                             .map(p -> new TeamMemberResponse(
                                     p.getUser().getUserId(),
                                     p.getUser().getName(),
-                                    p.getUser().getEbti()
+                                    p.getUser().getEbti(),
+                                    p.getRole()
                             ))
                             .toList();
                     return TeamResponseDto.from(team, members);
@@ -102,7 +103,8 @@ public class TeamService {
                 .map(p -> new TeamMemberResponse(
                         p.getUser().getUserId(),
                         p.getUser().getName(),
-                        p.getUser().getEbti()
+                        p.getUser().getEbti(),
+                        p.getRole()
                 ))
                 .toList();
 
