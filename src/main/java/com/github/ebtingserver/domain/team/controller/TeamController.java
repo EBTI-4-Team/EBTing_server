@@ -42,14 +42,16 @@ public class TeamController {
         return ResponseDTO.ok(teamService.getTeamDetail(teamId));
     }
 
+    @Operation(summary = "팀 정보 수정", description = "팀의 이름, 최대 인원, 설명을 수정합니다")
     @PatchMapping("/{teamId}")
     public ResponseDTO<Void> updateTeamInfo(@PathVariable Long teamId, @RequestBody TeamInfoUpdate request) {
         teamService.updateTeamInfo(teamId, request);
         return ResponseDTO.ok();
     }
 
+    @Operation(summary = "팀 삭제", description = "팀을 삭제합니다 (ADMIN 권한 필요)")
     @DeleteMapping("/{teamId}")
-    public ResponseDTO<Void> deleteTeam(@PathVariable Long teamId,@RequestParam Long userId) {
+    public ResponseDTO<Void> deleteTeam(@PathVariable Long teamId, @RequestParam Long userId) {
         teamService.deleteTeam(teamId, userId);
         return ResponseDTO.ok();
     }

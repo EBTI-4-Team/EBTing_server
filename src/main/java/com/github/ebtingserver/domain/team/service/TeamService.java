@@ -10,7 +10,6 @@ import com.github.ebtingserver.domain.team.dto.response.TeamDetailResponse;
 import com.github.ebtingserver.domain.team.dto.response.TeamMemberResponse;
 import com.github.ebtingserver.domain.team.dto.response.TeamResponseDto;
 import com.github.ebtingserver.domain.team.entity.Team;
-import com.github.ebtingserver.domain.team.exception.TeamExceptionCode;
 import com.github.ebtingserver.domain.team.repository.TeamRepository;
 import com.github.ebtingserver.domain.user.entity.User;
 import com.github.ebtingserver.domain.user.exception.UserExceptionCode;
@@ -29,7 +28,6 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;
     private final ParticipationRepository participationRepository;
-    private final UserRepository userRepository;
 
     public List<TeamResponseDto> getAllTeams() {
         return teamRepository.findAll()
@@ -90,9 +88,21 @@ public class TeamService {
                 .existsByTeam_TeamIdAndUser_UserIdAndRole(teamId, userId, ParticipationRole.ADMIN);
         if (!isAdmin) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다 (ADMIN 전용)");
-        } else  {
-            teamRepository.deleteById(teamId);
         }
+
+        // 팀원 확인 - MEMBER가 있으면 삭제 불가
+        List<Participation> participations = participationRepository.findByTeam_TeamId(teamId);
+        boolean hasMember = participations.stream()
+                .anyMatch(p -> p.getRole() == ParticipationRole.MEMBER);
+
+        if (hasMember) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "팀원이 있어 삭제할 수 없습니다. 먼저 모든 팀원을 내보내주세요");
+        }
+
+        // ADMIN만 있을 경우 삭제 진행
+        participationRepository.deleteAll(participations);
+        teamRepository.deleteById(teamId);
     }
 
 
