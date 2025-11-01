@@ -20,16 +20,20 @@ public record TeamDetailResponse(
         String teamExplain,
 
         @Schema(description = "팀 멤버 목록")
-        List<TeamMemberResponse> members
+        List<TeamMemberResponse> members,
+
+        @Schema(description = "리포트 ID (리포트가 없으면 null)")
+        Long reportId
 
 ) {
-    public static TeamDetailResponse of(Team team, List<TeamMemberResponse> members) {
+    public static TeamDetailResponse of(Team team, List<TeamMemberResponse> members, Long reportId) {
         return new TeamDetailResponse(
                 team.getTeamId(),
                 team.getTeamName(),
                 team.getMaxMember(),
                 team.getTeamExplain(),
-                members
+                members,
+                reportId
         );
     }
 }

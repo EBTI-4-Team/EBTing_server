@@ -106,7 +106,12 @@ public class TeamService {
                 ))
                 .toList();
 
-        return TeamDetailResponse.of(team, members);
+        // 리포트가 있으면 reportId를 가져오고, 없으면 null
+        Long reportId = reportRepository.findByTeam_TeamId(teamId)
+                .map(Report::getReportId)
+                .orElse(null);
+
+        return TeamDetailResponse.of(team, members, reportId);
     }
 
     @Transactional
