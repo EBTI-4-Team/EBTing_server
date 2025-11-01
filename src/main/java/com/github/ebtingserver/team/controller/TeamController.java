@@ -23,7 +23,8 @@ public class TeamController {
     //전체 팀 조회
     @GetMapping
     public ResponseEntity<List<TeamResponseDto>> getAllTeams() {
-        List<TeamResponseDto> teams = teamRepository.findAll();
+        List<TeamResponseDto> teams = teamService.getAllTeams();
+
         return ResponseEntity.ok(teams);
     }
 

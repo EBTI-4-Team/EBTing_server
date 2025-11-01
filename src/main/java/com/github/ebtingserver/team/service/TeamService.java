@@ -17,6 +17,13 @@ import java.util.List;
 public class TeamService {
     private final TeamRepository teamRepository;
 
+    public List<TeamResponseDto> getAllTeams() {
+        return teamRepository.findAll()
+                .stream()
+                .map(TeamResponseDto::from)
+                .toList();
+    }
+
     @Transactional
     public void createTeam(TeamCreateRequest request){
         String teamName = request.teamName();
