@@ -1,4 +1,4 @@
-package com.github.ebting_server.common.config;
+package com.github.ebtingserver.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

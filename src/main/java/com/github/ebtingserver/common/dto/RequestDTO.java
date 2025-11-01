@@ -1,4 +1,4 @@
-package com.github.ebting_server.common.dto;
+package com.github.ebtingserver.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

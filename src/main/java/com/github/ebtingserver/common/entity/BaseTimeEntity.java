@@ -1,4 +1,4 @@
-package com.github.ebting_server.common.entity;
+package com.github.ebtingserver.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

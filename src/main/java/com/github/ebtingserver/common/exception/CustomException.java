@@ -1,4 +1,4 @@
-package com.github.ebting_server.common.exception;
+package com.github.ebtingserver.common.exception;
 
 import lombok.Getter;
 
