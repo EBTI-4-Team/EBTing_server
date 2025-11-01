@@ -105,5 +105,34 @@ public class TeamService {
         teamRepository.deleteById(teamId);
     }
 
+    public void joinTeam(Long teamId, Long userId){
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "팀을 찾을 수 없습니다"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(UserExceptionCode.USER_NOT_FOUND));
+
+        Participation p = Participation.builder()
+                .team(team)
+                .user(user)
+                .role(ParticipationRole.MEMBER)
+                .build();
+        participationRepository.save(p);
+
+    }
+    @Transactional
+    public void leaveTeam(Long teamId, Long userId){
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "팀을 찾을 수 없습니다"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(UserExceptionCode.USER_NOT_FOUND));
+
+        boolean isAdmin = participationRepository.existsByTeam_TeamIdAndUser_UserIdAndRole(
+                teamId, userId, ParticipationRole.ADMIN);
+
+        if (isAdmin) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "ADMIN은 탈퇴할 수 없습니다");
+        }
+        participationRepository.deleteByTeam_TeamIdAndUser_UserId(teamId, userId);
+    }
 
 }

@@ -56,5 +56,17 @@ public class TeamController {
         return ResponseDTO.ok();
     }
 
+    @PostMapping("/{teamId}/users")
+    public ResponseDTO<Void> joinTeam(@PathVariable Long teamId, @RequestParam Long userId) {
+        teamService.joinTeam(teamId, userId);
+        return ResponseDTO.ok();
+    }
+
+    @DeleteMapping("/{teamId}/users/me")
+    public ResponseDTO<Void> leaveTeam(@PathVariable Long teamId, @RequestParam Long userId) {
+        teamService.leaveTeam(teamId, userId);
+        return ResponseDTO.ok();
+    }
+
 
 }

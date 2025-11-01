@@ -11,4 +11,5 @@ public interface ParticipationRepository extends JpaRepository<Participation, Lo
     List<Participation> findByUser(User user);
     List<Participation> findByTeam_TeamId(Long teamId);
     boolean existsByTeam_TeamIdAndUser_UserIdAndRole(Long teamId, Long userId, ParticipationRole role);
+    long deleteByTeam_TeamIdAndUser_UserId(Long teamId, Long userId);
 }
