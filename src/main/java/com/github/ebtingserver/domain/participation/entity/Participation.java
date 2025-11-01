@@ -1,4 +1,4 @@
-package com.github.ebtingserver.participation.entity;
+package com.github.ebtingserver.domain.participation.entity;
 
 import com.github.ebtingserver.common.entity.BaseTimeEntity;
 import com.github.ebtingserver.domain.user.entity.User;
