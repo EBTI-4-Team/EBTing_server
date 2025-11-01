@@ -20,4 +20,7 @@ public class LoginResponseDto {
     @Schema(description = "사용자 이름", example = "홍길동")
     private String name;
 
+    @Schema(description = "EBTI 유형", example = "DICE")
+    private String ebti;
+
 }

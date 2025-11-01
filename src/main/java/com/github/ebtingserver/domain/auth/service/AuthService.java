@@ -60,6 +60,7 @@ public class AuthService {
                 .accessToken(accessToken)
                 .userId(user.getUserId())
                 .name(user.getName())
+                .ebti(user.getEbti())
                 .build();
     }
 
