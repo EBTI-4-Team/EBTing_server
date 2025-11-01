@@ -142,7 +142,14 @@ public class TeamService {
         }
 
         // ADMIN만 있을 경우 삭제 진행
+        // 1. 팀원(participations) 삭제
         participationRepository.deleteAll(participations);
+
+        // 2. 리포트(report) 삭제 (있다면)
+        reportRepository.findByTeam_TeamId(teamId)
+                .ifPresent(reportRepository::delete);
+
+        // 3. 팀 삭제
         teamRepository.deleteById(teamId);
     }
 
