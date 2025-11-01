@@ -32,7 +32,7 @@ public class TeamController {
     @Operation(summary = "팀 생성", description = "새로운 팀을 생성합니다")
     @PostMapping
     public ResponseDTO<Void> createTeam(@Valid @RequestBody TeamCreateRequest request) {
-        teamService.createTeam(request);
+        teamService.createTeam(request.userId(), request);
         return ResponseDTO.ok();
     }
 

@@ -21,6 +21,9 @@ jwt:
   secret: your-secret-key-minimum-256-bits-long-for-hs256-algorithm-security-purpose
   access-token-validity: 86400000  # 24시간 (밀리초)
 
+fastapi:
+  url: http://localhost:8000
+
 springdoc:
   api-docs:
     path: /v3/api-docs
