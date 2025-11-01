@@ -23,7 +23,7 @@ public class SwaggerConfig {
 
     private Info info() {
 
-        return new Info().title("KookDongE").description("국동이").version("0.1.0");
+        return new Info().title("EBTing").description("EBTI 기반 팀 빌딩 에이전트").version("0.1.0");
     }
 
     private SecurityScheme securityScheme() {
