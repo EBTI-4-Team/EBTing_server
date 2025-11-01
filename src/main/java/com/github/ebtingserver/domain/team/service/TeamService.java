@@ -4,7 +4,6 @@ import com.github.ebtingserver.common.exception.CustomException;
 import com.github.ebtingserver.domain.participation.entity.Participation;
 import com.github.ebtingserver.domain.participation.entity.ParticipationRole;
 import com.github.ebtingserver.domain.participation.repository.ParticipationRepository;
-import com.github.ebtingserver.domain.participation.repository.ParticipationRepository;
 import com.github.ebtingserver.domain.team.dto.request.TeamCreateRequest;
 import com.github.ebtingserver.domain.team.dto.response.TeamDetailResponse;
 import com.github.ebtingserver.domain.team.dto.response.TeamMemberResponse;
@@ -48,7 +47,6 @@ public class TeamService {
                 .teamExplain(request.teamExplain())
                 .build();
         teamRepository.save(team);
-    }
 
         Participation participation = Participation.builder()
                 .user(user)
@@ -56,6 +54,7 @@ public class TeamService {
                 .role(ParticipationRole.ADMIN)
                 .build();
         participationRepository.save(participation);
+    }
 
     @Transactional
     public TeamDetailResponse getTeamDetail(Long teamId){
