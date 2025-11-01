@@ -7,6 +7,10 @@ import jakarta.validation.constraints.NotNull;
 
 @Schema(description = "팀 생성 요청")
 public record TeamCreateRequest(
+        @Schema(description = "팀 생성자 사용자 ID", example = "1", required = true)
+        @NotNull(message = "사용자 ID는 필수입니다")
+        Long userId,
+
         @Schema(description = "팀 이름", example = "개발팀", required = true)
         @NotBlank(message = "팀 이름은 필수입니다")
         String teamName,

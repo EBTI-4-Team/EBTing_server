@@ -29,4 +29,8 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String password;
 
+    public void updateEbti(String ebti) {
+        this.ebti = ebti;
+    }
+
 }
