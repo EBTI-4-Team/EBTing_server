@@ -3,6 +3,7 @@ package com.github.ebtingserver.domain.team.controller;
 
 import com.github.ebtingserver.common.dto.ResponseDTO;
 import com.github.ebtingserver.domain.team.dto.request.TeamCreateRequest;
+import com.github.ebtingserver.domain.team.dto.response.TeamDetailResponse;
 import com.github.ebtingserver.domain.team.dto.response.TeamResponseDto;
 import com.github.ebtingserver.domain.team.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +33,12 @@ public class TeamController {
     public ResponseDTO<Void> createTeam(@Valid @RequestBody TeamCreateRequest request) {
         teamService.createTeam(request.userId(), request);
         return ResponseDTO.ok();
+    }
+
+    @Operation(summary = "팀 상세 조회", description = "팀 정보를 상세 조회 합니다. ")
+    @GetMapping("/{teamId}")
+    public ResponseDTO<TeamDetailResponse> getTeamDetail(@PathVariable Long teamId) {
+        return ResponseDTO.ok(teamService.getTeamDetail(teamId));
     }
 
 }
