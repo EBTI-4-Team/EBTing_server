@@ -58,7 +58,17 @@ public class TeamService {
     public List<TeamResponseDto> getAllTeams() {
         return teamRepository.findAll()
                 .stream()
-                .map(TeamResponseDto::from)
+                .map(team -> {
+                    List<TeamMemberResponse> members = participationRepository.findByTeam_TeamId(team.getTeamId())
+                            .stream()
+                            .map(p -> new TeamMemberResponse(
+                                    p.getUser().getUserId(),
+                                    p.getUser().getName(),
+                                    p.getUser().getEbti()
+                            ))
+                            .toList();
+                    return TeamResponseDto.from(team, members);
+                })
                 .toList();
     }
 
