@@ -5,6 +5,7 @@ import com.github.ebtingserver.common.dto.ResponseDTO;
 import com.github.ebtingserver.domain.team.dto.request.TeamCreateRequest;
 import com.github.ebtingserver.domain.team.dto.request.TeamInfoUpdate;
 import com.github.ebtingserver.domain.team.dto.response.TeamDetailResponse;
+import com.github.ebtingserver.domain.team.dto.response.TeamReportResponse;
 import com.github.ebtingserver.domain.team.dto.response.TeamResponseDto;
 import com.github.ebtingserver.domain.team.service.TeamService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -56,17 +57,32 @@ public class TeamController {
         return ResponseDTO.ok();
     }
 
+    @Operation(summary = "팀 가입", description = "팀에 MEMBER 역할로 가입합니다")
     @PostMapping("/{teamId}/users")
     public ResponseDTO<Void> joinTeam(@PathVariable Long teamId, @RequestParam Long userId) {
         teamService.joinTeam(teamId, userId);
         return ResponseDTO.ok();
     }
 
+    @Operation(summary = "팀 탈퇴", description = "팀에서 탈퇴합니다 (ADMIN은 탈퇴 불가)")
     @DeleteMapping("/{teamId}/users/me")
     public ResponseDTO<Void> leaveTeam(@PathVariable Long teamId, @RequestParam Long userId) {
         teamService.leaveTeam(teamId, userId);
         return ResponseDTO.ok();
     }
 
+    @Operation(summary = "팀 리포트 생성", description = "팀원들의 EBTI를 분석하여 GPT 기반 프로젝트 진행 리포트를 생성합니다. 팀 설명(teamExplain)을 기반으로 리포트를 생성합니다.")
+    @PostMapping("/{teamId}/report")
+    public ResponseDTO<TeamReportResponse> generateReport(@PathVariable Long teamId) {
+        TeamReportResponse report = teamService.generateReport(teamId);
+        return ResponseDTO.ok(report);
+    }
+
+    @Operation(summary = "팀 리포트 조회", description = "저장된 팀 리포트를 조회합니다.")
+    @GetMapping("/{teamId}/report/{reportId}")
+    public ResponseDTO<TeamReportResponse> getReport(@PathVariable Long teamId, @PathVariable Long reportId) {
+        TeamReportResponse report = teamService.getReport(teamId, reportId);
+        return ResponseDTO.ok(report);
+    }
 
 }
